@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package proto;
+
+//option go_package = "github.com/gervasioamy/go-grpc-poc;go_grpc_poc";
+option go_package = ".;proto";
+option java_package = "com.gervasioamy.proto";
+
+
+message Notification {
+    string body = 1;
+    string timestamp = 2;
+}
+
+message SendNotificationResponse {
+    int32 Id  = 1; // the id of just created notification
+}
+
+message GetNotificationsRequest {
+    // nothing (for now)
+}
+
+message GetNotificationsResponse {
+    repeated Notification notifications= 1;
+}
+
+message RemoveNotificationRequest {
+    int32 Id = 1;
+}
+
+message RemoveNotificationResponse {
+    bool Removed = 1;
+}
+
+
+service NotificationService {
+    rpc SendNotification(Notification) returns (SendNotificationResponse) {}
+    rpc GetNotifications(GetNotificationsRequest) returns (GetNotificationsResponse) {}
+    rpc RemoveNotification(RemoveNotificationRequest) returns (RemoveNotificationResponse) {}
+}
+
